@@ -9,7 +9,8 @@ from PyML.datagen import sample
 import matplotlib.pyplot as plt
 
 def read_data(file_name):
-   data = vectorDatasets.load_libsvm_format(file_name)
+   data = vectorDatasets.PyVectorDataSet("train_new_train.data")
+   data.attachLabels(Labels("train_new_label.data"))
    return data
 
 
@@ -122,7 +123,7 @@ def plot_p(start, end, multi,data,c_list,name):
    return x,a
 
 if __name__ == "__main__":
-   #data=read_data('motif')
+   data=read_data('train')
    #data.normalize()
    #x,a=plot_c(0.0001,1000,10,data,['g0.01','g1','g10','p1','p3'],'c')
    #x,a=plot_c(0.0001,1000,1.5,data,['p1'],'c2')
