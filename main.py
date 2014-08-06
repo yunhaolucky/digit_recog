@@ -15,7 +15,7 @@ def read_data(file_name):
 		labels=[]                                                     
 		for row in csv_file_object:
 			labels.append(int(row[0]))
-			train.append(row[1:])
+			train.append(map(int,row[1:]))
 		return labels,train
 	if file_name == 'test':
 		csv_file_object = csv.reader(open('test.csv', 'rb'))      
@@ -51,7 +51,7 @@ def manual_test(clf,train, train_labels,test,test_labels):
 '''print report and confusion matrx'''
 def print_report(clf,expected,predicted):
 	print("Classification report for classifier %s:\n%s\n"
-		% (classifier, metrics.classification_report(test_labels, predicted)))
+		% (clf, metrics.classification_report(expected, predicted)))
 	print("Confusion matrix:\n%s" % metrics.confusion_matrix(expected, predicted))
 
 
@@ -69,12 +69,35 @@ def cv_one_vs_one(clf,train, labels):
 	print "one vs all", ("{0:.5f}".format(np.mean(scores)))
 	return clf
 
+def baseline(train, labels):
+	classifier = svm.SVC(gamma=1)
+	classifier.fit(train[:1000], labels[:1000])
+	expected = labels[1000:2000]
+	predicted =  classifier.predict(train[1000:2000])
+	#print_report(classifier, expected, predicted)
+	print("Classification report for classifier \n%s\n"
+		% metrics.classification_report(expected, predicted))
+	print("Confusion matrix:\n%s" % metrics.confusion_matrix(expected, predicted))
+	return expected,predicted
+
+
+
 if __name__ == "__main__":
 	labels,train=read_data('train')
 	#test=read_data('test')
-	print 'finish reading test'
-	clf = svm.LinearSVC()
-	cv_one_vs_all(clf,train[:500], labels[:500])
-	cv_one_vs_one(clf,train[:500], labels[:500])
-
+	#print 'finish reading test'
+	#clf = svm.LinearSVC()
+	baseline(train,labels)
+	#cv_one_vs_all(clf,train[:500], labels[:500])
+	#cv_one_vs_one(clf,train[:500], labels[:500])
+	#expected,predicted=baseline(train,labels)
+	#classifier = svm.LinearSVC()
+	#scores = cross_validation.cross_val_score(classifier,train,labels, cv=5)
+	#classifier.fit(train[:1000], labels[:1000])
+	#expected = labels[500:1000]
+	#predicted =  classifier.predict(train[1000:2000])
+	#print_report(classifier, expected, predicted)
+	#print("Classification report for classifier %s:\n%s\n"
+	#	% (classifier, metrics.classification_report(expected, predicted)))
+	#print("Confusion matrix:\n%s" % metrics.confusion_matrix(expected, predicted))
 
