@@ -17,6 +17,16 @@ def transfer_data(file_name):
 		label_ob = csv.writer(label_file)
 		for i in labels:
 			label_ob.writerow([i])
+	if file_name =='test':
+		csv_file_object = csv.reader(open('test.csv', 'rb'))      
+		header = csv_file_object.next()                             
+		test=[]                                                    
+		for row in csv_file_object:
+			test.append(map(int,row))
+		test_file = open(file_name+"_new.data", "wb")
+		test_ob = csv.writer(test_file)
+		for i in test:
+			test_ob.writerow((i))
 
 if __name__ == "__main__":
-	transfer_data('train')
+	transfer_data('test')

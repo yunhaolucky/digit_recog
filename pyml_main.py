@@ -1,18 +1,22 @@
 
 from PyML import *
 from PyML import ker
+from PyML.classifiers import multi
 from PyML.demo import demo2d
 
-
+import csv
 from PyML.datagen import sample
 
 import matplotlib.pyplot as plt
 
 def read_data(file_name):
-   data = vectorDatasets.PyVectorDataSet("train_new_train.data")
-   data.attachLabels(Labels("train_new_label.data"))
-   return data
-
+   if file_name== 'train':
+      data = vectorDatasets.VectorDataSet("train_new_train.data")
+      data.attachLabels(Labels("train_new_label.data"))
+      return data
+   if file_name =='test':
+      data = vectorDatasets.VectorDataSet("test_new.data")
+      return data
 
 
 def train_wok(c,data,cv_num=5):
@@ -122,9 +126,39 @@ def plot_p(start, end, multi,data,c_list,name):
    plt.clf()
    return x,a
 
+def train(c,data,cv_num,kernel_name):
+   s=svm.SVM(getkernel(kernel_name),C=c)
+   return s.cv(data,cv_num)
+
+def multi_train(c,data,kernel_name):
+   s=svm.SVM()
+   #s = svm.SVM(optimizer = 'liblinear')
+   #mc.train(data)
+   #mc = multi.OneAgainstRest(svm.SVM(),C=1)
+   mc = multi.OneAgainstOne(svm.SVM(),C=1)
+   mc.cv(data,2)
+
+def train_and_test(s,test):
+   r=s.test(test)
+   result_file = open("result.csv","wb")
+   result_ob = csv.writer(result_file)
+   result_ob.writerow(['ImageId','Label'])
+   j=1
+   for i in r.L:
+      l=[j]
+      l.append(i)
+      result_ob.writerow(l)
+      print l
+      j=j+1
+
 if __name__ == "__main__":
-   data=read_data('train')
+   #data=read_data('train')
    #data.normalize()
+   #test=read_data('test')
+   #s=multi.OneAgainstRest(svm.SVM(),C=1)
+   #s.train(data)
+   train_and_test(s,test)
+
    #x,a=plot_c(0.0001,1000,10,data,['g0.01','g1','g10','p1','p3'],'c')
    #x,a=plot_c(0.0001,1000,1.5,data,['p1'],'c2')
    #r=train(1,data,5,'p1')
