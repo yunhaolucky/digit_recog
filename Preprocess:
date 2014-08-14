@@ -1,0 +1,34 @@
+Preprocess:
+Denoise: (>5)/(<5)
+
+Feature Extraction:
+1. F-Scores:
+
+2. Profile Features:
+3. Features:
+
+
+
+Classifier:
+Polynomial C=1 p=5
+Gaussian: C=3 gamma=0.7
+
+OnevOne:
+OnevAll:
+
+BDT-SVM:
+Get the average of all labelled data:
+
+We need 9 SVM as the same as One vs All.
+I calculate the gravity center of all patterns that are labelled for 10 digit classes. 
+Then, the group that has the largest distance are assigned to each of the two groups. Next, compare the distance to the group and then classified all the group.
+0123456789
+|       \
+23479   15680
+|  \     |  \
+23  479  15  680
+|\  | \  |\  |  \
+2 3 49 7 1 5 60  8
+    | \      |\
+    4  9     6 0
+

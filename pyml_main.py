@@ -37,14 +37,14 @@ def test_and_print(s,test):
       print l
       j=j+1
 
-if __name__ == "__main__":
+'''if __name__ == "__main__":
    data=read_data('train')
    data.normalize()
    test=read_data('test')
    s=svm.SVM()
-   mc = multi.OneAgainstOne(svm.SVM(ker.Gaussian()),C=1,gamma=0.1)
+   mc = multi.OneAgainstRest(svm.SVM(ker.Gaussian()),C=10,gamma=0.77387)
    mc.train(data)
-   test_and_print(mc,test)
+   test_and_print(mc,test)'''
 
 
 
