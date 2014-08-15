@@ -1,0 +1,17 @@
+linear kernel:
+svm(one vs one) 0.908
+svm(one vs all) 0.930
+binary decision tree: 0.87
+
+SVM:
+rbf kernel:
+C=10 gamma=0.01
+PCA(component=80) 0.966
+
+HOG features:
+linear kernel 0.974
+rbf: 0.984
+intersection kernel : 
+
+
+

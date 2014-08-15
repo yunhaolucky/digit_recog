@@ -78,6 +78,8 @@ def my_kernel(x,u):
     for d in xrange(n_samples):
         K[d][0] = np.sum(np.minimum(x[d],u))
     return np.matrix(K)
+def HIK_kernel(X,Y):
+    return np.array([[np.sum(np.minimum(x,y)) for y in Y] for x in X]) 
 
 def my_kernel2(x,y):
     x=x.tolist()
@@ -94,7 +96,6 @@ def my_kernel2(x,y):
                 result+=x_temp[j]
         r.append(result)
     return np.matrix(r)
-
 def doWorkTest():
     df = pd.read_csv('hog.csv')
     print "Finish Reading"
@@ -103,12 +104,12 @@ def doWorkTest():
     splits = np.split(ixs, [14000, 28000])
     s=splits[0]
     min_max_scaler = MinMaxScaler()
-    pca = PCA(n_components=80)
+    pca = PCA(n_components=100)
     X = df.ix[s,1:].copy()
     y = df.ix[s,0].copy()
     X = min_max_scaler.fit_transform(X)
     X = pca.fit_transform(X)
-    svm = SVC(C=10,gamma=0.01,kernel='rbf').fit(X, y)
+    svm = SVC(C=10,kernel=HIK_kernel).fit(X, y)
     df2 = pd.read_csv('hog_test.csv')
     df2 = df2.astype('float64')
     Xt = df2.copy()
@@ -124,11 +125,11 @@ def doWork2():
     clfs = []
     ixs = np.arange(df.shape[0])
     splits = np.split(ixs, [14000, 28000])
-    #tuned_parameters = [{'gamma': [1e-2], 'C': [10]}]
-    tuned_parameters = [{'C': [10]}]
+    tuned_parameters = [{'gamma': [0.7], 'C': [10]}]
+    #tuned_parameters = [{'C': [10]}]
     for s in splits:
         min_max_scaler = MinMaxScaler()
-        pca = PCA(n_components=80)
+        pca = PCA(n_components=200)
 
     # get training subset
         X = df.ix[s,1:].copy()
