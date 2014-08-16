@@ -13,5 +13,28 @@ linear kernel 0.974
 rbf: 0.984
 intersection kernel : 
 
+The best result I get is 98.45% by using orientation histogram features and rbf kernels.
 
+- Baseline
+  I use SVM with linear kernel. 
+  - One vs One 0.908
+  - One vs Rest 0.930
+
+- rbf kernel
+ 	The best performance is achieved by hyperparameter set[ C=10, gamma = 0.7 ] error rate with (PCA = 80) = 3%
+
+- SVM with Binary Decision Tree
+	Build a binary decision tree based on the euclidean distance between each labels' mean. error rate = 13%.
+
+- Feature Extraction:
+  
+  I try 2 methods to reduce the size of features:1)F-scores. 2)PCA:Principal component analysis
+  - F-score
+  	Use F-scores(variance between groups/variance within groups) to pick the most N relavant features. I test with N = 50, 100, 200. error rate > 10%.
+  - PCA
+  	Use sklean.decomposition.PCA to reduce the dimensionality of training data. I choose n_components = 200 as the result is good and running time is relatively short. error rate = 3.54%.
+
+  I also try to using Orientation Histogram as features. I use scimage.hog to get HOG features and predict with rbf and intersection kernel.
+  - rbf (C=10 gamma =0.01 PCA_component = 200) error rate = 1.55%.
+  - intersection (PCA_component = 200) error rate = 2.8%
 
