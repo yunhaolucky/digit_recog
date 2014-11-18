@@ -1,5 +1,11 @@
-digit_recog
+Digit Recognition with SVM
 ===========
+
+* Data --  [MNIST](http://yann.lecun.com/exdb/mnist/)
+  * The training data set has 784 column(label + images) and 42000 rows.
+  * The digit images contain grey levels(0 - 255) and is centered in a 28x28 image by computing the center of mass of the pixels.
+  *  The first 40 digit images are shown as follows:
+    *   
 The best result I get is 98.45% by using orientation histogram features and rbf kernels.
 
 - Baseline
