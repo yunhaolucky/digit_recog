@@ -38,7 +38,7 @@ I try 2 methods to reduce the size of features:1)F-scores. 2)PCA:Principal compo
   - rbf (C=10 gamma =0.01 PCA_component = 200) error rate = 2.8%.
   - intersection (PCA_component = 200) error rate = 1.55%
 
-* Support Vector Machine Note
+#### Support Vector Machine Note
   * [Kernel function] (http://yunhaocsblog.wordpress.com/2014/07/23/kernel-function/)
   * [SMO] (http://yunhaocsblog.wordpress.com/2014/07/22/smo-algorithm/)
   * [THE EFFECTS OF HYPERPARAMETERS IN SVM] (http://yunhaocsblog.wordpress.com/2014/07/27/the-effects-of-hyperparameters-in-svm/)
